@@ -172,8 +172,6 @@
         if (typeof s === 'string') s = s.trim();
       }
       if (!s) return null;
-
-      s = s.replace(/^data:aimage\//i, 'data:image/');
       if (/^data:image\//i.test(s)) return s;
 
       const base64Like = /^[A-Za-z0-9+/=\r\n]+$/.test(s) && s.length > 200 && !/\s{2,}/.test(s);
