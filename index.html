@@ -3,103 +3,62 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TDS Data Analyst AI-Agent</title>
-  <!-- Cyberpunk font -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <title>Data Analyst Agent</title>
   <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
-    font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6; color:#00f6ff;
-    background: linear-gradient(135deg,#0a0a0f 0%,#1b1b27 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6; color:#00fff7;
+    background: linear-gradient(135deg,#0b0b0f 0%,#1a001a 100%);
     min-height:100vh;
-    overflow-x: hidden;
   }
   .container { max-width:1200px; margin:0 auto; padding:20px; }
-  .header { text-align:center; margin-bottom:30px; color:#0ff; text-shadow:0 0 10px #0ff, 0 0 20px #00f6ff; }
-  .header h1 { font-size:2.5rem; margin-bottom:10px; text-shadow:0 0 10px #0ff, 0 0 20px #00f6ff; }
-  .header p { font-size:1.1rem; opacity:.85; color:#0ff; }
-
+  .header { text-align:center; margin-bottom:30px; color:#fff; }
+  .header h1 { font-size:2.5rem; margin-bottom:10px; text-shadow:0 0 10px #ff00ff, 0 0 20px #00fff7; }
+  .header p { font-size:1.1rem; opacity:.8; color:#0ff; }
   .main-card {
-    background:#11111b;
-    border:1px solid #00f6ff33;
-    border-radius:15px;
-    box-shadow:0 0 20px #00f6ff66, 0 10px 30px rgba(0,255,255,0.2);
+    background:#0d0d18; border-radius:15px; box-shadow:0 10px 30px rgba(128,0,255,.5);
     padding:30px; margin-bottom:30px;
-    transition:0.3s all;
   }
-  .main-card:hover {
-    box-shadow:0 0 30px #0ff, 0 0 60px #00f6ff66;
-  }
-
-  .form-group label {
-    display:block; margin-bottom:8px; font-weight:600; color:#0ff;
-    text-shadow:0 0 5px #0ff;
-  }
-
+  .form-group label { display:block; margin-bottom:8px; font-weight:600; color:#0ff; }
   .file-input {
-    width:100%; padding:15px; border:2px dashed #0ff33;
-    border-radius:8px; background:#11111b; cursor:pointer;
-    transition:.3s ease; text-align:center; color:#0ff77;
-    position:relative;
+    width:100%; padding:15px; border:2px dashed #333; border-radius:8px;
+    background:#0c0c1a; cursor:pointer; transition:.3s ease; text-align:center; position:relative;
+    color:#0ff;
   }
-  .file-input:hover { border-color:#0ff; background:#0b0b16; color:#0ff; box-shadow:0 0 10px #0ff; }
-
-  .file-info { 
-    margin-top:10px; padding:10px; background:#0b0b16; 
-    border-radius:5px; font-size:14px; color:#0ff; display:none; 
-    text-shadow:0 0 5px #0ff;
-  }
-
+  .file-input:hover { border-color:#ff00ff; background:#1a001a; color:#fff; }
+  .file-info { margin-top:10px; padding:10px; background:#111; border-radius:5px; font-size:14px; color:#ff77ff; display:none; }
   .btn {
-    background:linear-gradient(135deg,#0ff 0%,#00f6ff 100%); color:#000; border:none;
-    padding:15px 30px; border-radius:8px; font-size:16px; font-weight:600;
-    cursor:pointer; transition:.3s ease; width:100%;
-    box-shadow:0 0 10px #0ff, 0 5px 20px #00f6ff44;
+    background:linear-gradient(135deg,#ff00ff 0%,#00fff7 100%); color:#000; border:none;
+    padding:15px 30px; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition:.3s ease; width:100%;
   }
-  .btn:hover { transform:translateY(-2px); box-shadow:0 0 20px #0ff, 0 10px 30px #00f6ff77; }
-  .btn:disabled { background:#222; cursor:not-allowed; transform:none; box-shadow:none; }
-
-  .btn-secondary { 
-    background:#111; color:#0ff; border:1px solid #0ff; 
-    box-shadow:0 0 5px #0ff; 
-  }
-  .btn-secondary:hover { box-shadow:0 0 10px #0ff, 0 5px 20px #0ff33; }
-
+  .btn:hover { transform:translateY(-2px); box-shadow:0 5px 15px rgba(0,255,255,.6); }
+  .btn:disabled { background:#333; cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn-secondary { background:#222; color:#0ff; }
   .button-group { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
-
   .loading { display:none; text-align:center; padding:20px; color:#0ff; }
   .spinner {
-    border:4px solid #0b0b16; border-top:4px solid #0ff;
-    border-radius:50%; width:40px; height:40px;
-    animation:spin 1s linear infinite; margin:0 auto 15px;
+    border:4px solid #222; border-top:4px solid #ff00ff; border-radius:50%;
+    width:40px; height:40px; animation:spin 1s linear infinite; margin:0 auto 15px;
   }
   @keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
-
   .results { display:none; margin-top:30px; }
-  .result-item {
-    background:#11111b; border-left:4px solid #0ff;
-    padding:20px; margin-bottom:20px; border-radius:0 8px 8px 0;
-    box-shadow:0 0 10px #0ff33;
+  .result-item { background:#0a0a1a; border-left:4px solid #ff00ff; padding:20px; margin-bottom:20px; border-radius:0 8px 8px 0; }
+  .question { font-weight:600; color:#00fff7; margin-bottom:15px; font-size:1.1rem; }
+  .answer { color:#ccc; line-height:1.6; }
+  .answer pre {
+    background:#111; color:#0ff;
   }
-  .question { font-weight:600; color:#0ff; margin-bottom:15px; font-size:1.1rem; }
-  .answer { color:#00f6ff; line-height:1.6; text-shadow:0 0 5px #0ff; }
-  .answer pre { background:#1b1b27; color:#0ff; padding:10px; border-radius:5px; }
-
   .answer img {
     max-width:100%; height:auto; border-radius:8px; margin:10px 0;
-    box-shadow:0 0 10px #0ff, 0 5px 20px #00f6ff44; cursor:pointer;
-    transition:transform .3s ease, box-shadow .3s ease;
+    box-shadow:0 4px 8px rgba(128,0,255,.5); cursor:pointer; transition:transform .3s ease;
   }
-  .answer img:hover { transform:scale(1.03); box-shadow:0 0 20px #0ff, 0 10px 30px #00f6ff77; }
-
-  .error { background:#330000; border-left-color:#ff00ff; color:#ff77aa; box-shadow:0 0 10px #ff00ff; }
-
-  .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.95); }
-  .modal-content { margin:auto; display:block; width:80%; max-width:700px; max-height:80%; object-fit:contain; box-shadow:0 0 20px #0ff; }
-  .close { position:absolute; top:15px; right:35px; color:#0ff; font-size:40px; font-weight:bold; cursor:pointer; text-shadow:0 0 10px #0ff; }
-  .close:hover { color:#0ff77; }
-
+  .answer img:hover { transform:scale(1.02); }
+  .error { background:#3b001f; border-left-color:#ff0055; color:#ff77aa; }
+  .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,.95); }
+  .modal-content { margin:auto; display:block; width:80%; max-width:700px; max-height:80%; object-fit:contain; }
+  .close { position:absolute; top:15px; right:35px; color:#ff00ff; font-size:40px; font-weight:bold; cursor:pointer; }
+  .close:hover { color:#00fff7; }
   @media (max-width:768px){
     .container{padding:10px}
     .header h1{font-size:2rem}
@@ -107,7 +66,7 @@
     .button-group{flex-direction:column}
     .btn-secondary{width:100%}
   }
-  </style>
+</style>
 </head>
 <body>
   <div class="container">
@@ -118,8 +77,9 @@
 
     <div class="main-card">
       <form id="analysisForm">
+        <!-- Questions file (REQUIRED) -->
         <div class="form-group">
-          <label for="questions_file">Questions File (.txt) <span style="color:#ff00ff">*</span></label>
+          <label for="questions_file">Questions File (.txt) <span style="color:#ff0055">*</span></label>
           <div class="file-input-wrapper">
             <div class="file-input" id="questionsDrop">
               <input type="file" id="questions_file" name="questions_file" accept=".txt"/>
@@ -129,6 +89,7 @@
           <div id="questionsInfo" class="file-info"></div>
         </div>
 
+        <!-- Dataset file (OPTIONAL) -->
         <div class="form-group">
           <label for="data_file">Upload Dataset (Optional)</label>
           <div class="file-input-wrapper">
@@ -158,12 +119,14 @@
     </div>
   </div>
 
+  <!-- Image Modal -->
   <div id="imageModal" class="modal">
     <span class="close">&times;</span>
     <img class="modal-content" id="modalImage" alt="Visualization"/>
   </div>
 
   <script>
+    /* ---------- Image normalization helpers ---------- */
     function normalizeImageData(answer) {
       let s = null;
       if (typeof answer === 'string') { s = answer.trim(); }
@@ -172,10 +135,14 @@
         if (typeof s === 'string') s = s.trim();
       }
       if (!s) return null;
+
+      s = s.replace(/^data:aimage\//i, 'data:image/');
+
       if (/^data:image\//i.test(s)) return s;
 
       const base64Like = /^[A-Za-z0-9+/=\r\n]+$/.test(s) && s.length > 200 && !/\s{2,}/.test(s);
       if (base64Like) return 'data:image/png;base64,' + s;
+
       return null;
     }
 
@@ -193,7 +160,7 @@
       if (text.includes('\n') || text.length > 120) {
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
-        pre.style.background = '#1b1b27';
+        pre.style.background = '#111';
         pre.style.padding = '15px';
         pre.style.borderRadius = '5px';
         pre.style.overflow = 'auto';
@@ -204,6 +171,7 @@
       }
     }
 
+    /* ---------------- App ---------------- */
     class DataAnalystApp {
       constructor() {
         this.form = document.getElementById('analysisForm');
@@ -236,9 +204,9 @@
       }
 
       setupDrop(zone, onDropFiles) {
-        zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.style.borderColor = '#0ff'; });
-        zone.addEventListener('dragleave', (e) => { e.preventDefault(); zone.style.borderColor = '#0ff33'; });
-        zone.addEventListener('drop', (e) => { e.preventDefault(); zone.style.borderColor = '#0ff33'; onDropFiles(e.dataTransfer.files); });
+        zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.style.borderColor = '#ff00ff'; });
+        zone.addEventListener('dragleave', (e) => { e.preventDefault(); zone.style.borderColor = '#333'; });
+        zone.addEventListener('drop', (e) => { e.preventDefault(); zone.style.borderColor = '#333'; onDropFiles(e.dataTransfer.files); });
       }
 
       handleFileSelect(event, type) {
